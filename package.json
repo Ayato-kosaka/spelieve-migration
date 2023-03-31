@@ -11,7 +11,7 @@
   "license": "ISC",
   "devDependencies": {
     "dotenv": "^16.0.3",
-    "spelieve-common": "^1.1.145",
+    "spelieve-common": "^1.1.150",
     "spelieve-common-v2.0": "https://registry.npmjs.org/spelieve-common/-/spelieve-common-1.1.113.tgz",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.2"
