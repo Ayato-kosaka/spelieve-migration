@@ -1,7 +1,10 @@
 import * as admin from "firebase-admin";
 import dotenv from "dotenv";
 
-dotenv.config({ path: "./spelieve-secret/spelieve-backend/development/.env" });
+dotenv.config({
+  path: "./spelieve-secret/spelieve-backend/development/.env",
+  override: true,
+});
 admin.initializeApp(
   {
     credential: admin.credential.cert({
