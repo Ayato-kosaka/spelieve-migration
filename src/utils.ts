@@ -1,4 +1,5 @@
 import * as fs from "fs";
+import { developmentDB } from "./developmentFirebase";
 
 const bulkWriterQue: {
   documentRef: FirebaseFirestore.DocumentReference<any>;
@@ -18,8 +19,10 @@ interface BulkWriter {
   close(): Promise<void>;
 }
 const bulkWriter = (firestore: FirebaseFirestore.Firestore) => {
-  if (process.env.EXECUTE_MIGRATION) {
+  if (process.env.EXECUTE_MIGRATION === "migration") {
     return firestore.bulkWriter();
+  } else if (process.env.EXECUTE_MIGRATION === "development") {
+    return developmentDB.bulkWriter();
   } else {
     return {
       create: (documentRef, data) => {
