@@ -1,4 +1,4 @@
-import { productionDB } from "../../productionDB";
+import { productionDB } from "../../productionFirebase";
 
 import { Plans as PlansV2_1 } from "spelieve-common/lib/Models/Itinerary/IDB03/Plans";
 import { Plans as PlansV2_0 } from "spelieve-common-v2.0/lib/Models/Itinerary/IDB03/Plans";

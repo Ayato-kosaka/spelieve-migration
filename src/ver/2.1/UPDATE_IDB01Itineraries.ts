@@ -1,4 +1,4 @@
-import { productionDB } from "../../productionDB";
+import { productionDB } from "../../productionFirebase";
 
 import { Itineraries as ItinerariesV2_1 } from "spelieve-common/lib/Models/Itinerary/IDB01/Itineraries";
 import { Itineraries as ItinerariesV2_0 } from "spelieve-common-v2.0/lib/Models/Itinerary/IDB01/Itineraries";
