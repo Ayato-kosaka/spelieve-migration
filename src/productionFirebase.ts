@@ -5,7 +5,7 @@ dotenv.config({
   path: "./spelieve-secret/spelieve-backend/production/.env",
   override: true,
 });
-admin.initializeApp(
+const productionAdmin = admin.initializeApp(
   {
     credential: admin.credential.cert({
       projectId: process.env.FIREBASE_PROJECT_ID!,
@@ -17,5 +17,5 @@ admin.initializeApp(
   admin.apps.length > 0 ? "production" : undefined
 );
 
-export const productionDB = admin.firestore();
-export const productionStorage = admin.storage();
+export const productionDB = productionAdmin.firestore();
+export const productionStorage = productionAdmin.storage();

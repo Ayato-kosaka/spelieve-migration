@@ -5,7 +5,7 @@ dotenv.config({
   path: "./spelieve-secret/spelieve-backend/development/.env",
   override: true,
 });
-admin.initializeApp(
+const developmentAdmin = admin.initializeApp(
   {
     credential: admin.credential.cert({
       projectId: process.env.FIREBASE_PROJECT_ID!,
@@ -16,6 +16,5 @@ admin.initializeApp(
   },
   admin.apps.length > 0 ? "development" : undefined
 );
-
-export const developmentDB = admin.firestore();
-export const developmentStorage = admin.storage();
+export const developmentDB = developmentAdmin.firestore();
+export const developmentStorage = developmentAdmin.storage();
