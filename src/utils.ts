@@ -5,11 +5,29 @@ const bulkWriterQue: {
   data: FirebaseFirestore.UpdateData<any>;
   precondition?: FirebaseFirestore.Precondition;
 }[] = [];
+interface BulkWriter {
+  create<T>(
+    documentRef: FirebaseFirestore.DocumentReference<T>,
+    data: FirebaseFirestore.WithFieldValue<T>
+  ): Promise<void>;
+  update<T>(
+    documentRef: FirebaseFirestore.DocumentReference<T>,
+    data: FirebaseFirestore.UpdateData<T>,
+    precondition?: FirebaseFirestore.Precondition
+  ): Promise<void>;
+  close(): Promise<void>;
+}
 const bulkWriter = (firestore: FirebaseFirestore.Firestore) => {
   if (process.env.EXECUTE_MIGRATION) {
     return firestore.bulkWriter();
   } else {
     return {
+      create: (documentRef, data) => {
+        bulkWriterQue.push({
+          documentRef,
+          data,
+        });
+      },
       update: (documentRef, data, precondition) => {
         bulkWriterQue.push({
           documentRef,
@@ -24,14 +42,7 @@ const bulkWriter = (firestore: FirebaseFirestore.Firestore) => {
         );
         return Promise.resolve();
       },
-    } as {
-      update<T>(
-        documentRef: FirebaseFirestore.DocumentReference<T>,
-        data: FirebaseFirestore.UpdateData<T>,
-        precondition?: FirebaseFirestore.Precondition
-      ): Promise<void>;
-      close(): Promise<void>;
-    };
+    } as BulkWriter;
   }
 };
 
