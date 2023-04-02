@@ -19,6 +19,10 @@ interface BulkWriter {
   close(): Promise<void>;
 }
 const bulkWriter = (firestore: FirebaseFirestore.Firestore) => {
+  console.log(
+    "utils.bulkWriter.EXECUTE_MIGRATION",
+    process.env.EXECUTE_MIGRATION
+  );
   if (process.env.EXECUTE_MIGRATION === "migration") {
     return firestore.bulkWriter();
   } else if (process.env.EXECUTE_MIGRATION === "development") {
