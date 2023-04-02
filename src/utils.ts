@@ -1,6 +1,14 @@
 import * as fs from "fs";
 import { developmentDB } from "./developmentFirebase";
 
+const firestore = (firestore: FirebaseFirestore.Firestore) => {
+  if (process.env.EXECUTE_MIGRATION === "migration") {
+    return firestore;
+  } else {
+    return developmentDB;
+  }
+};
+
 const bulkWriterQue: {
   documentRef: FirebaseFirestore.DocumentReference<any>;
   data: FirebaseFirestore.UpdateData<any>;
@@ -53,4 +61,4 @@ const bulkWriter = (firestore: FirebaseFirestore.Firestore) => {
   }
 };
 
-export const utils = { bulkWriter };
+export const utils = { firestore, bulkWriter };
