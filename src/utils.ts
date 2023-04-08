@@ -1,8 +1,13 @@
 import * as fs from "fs";
 import { developmentDB } from "./developmentFirebase";
 
+const EXECUTE_MIGRATION = process.env.EXECUTE_MIGRATION as
+  | "migration" // 実際に本番環境に反映する場合は、"migration"を指定する
+  | "development" // 開発環境で動作確認する場合は、"development"を指定する
+  | undefined; // それ以外の場合は、undefinedを指定することで、ローカルで動作確認できる
+
 const firestore = (firestore: FirebaseFirestore.Firestore) => {
-  if (process.env.EXECUTE_MIGRATION === "migration") {
+  if (EXECUTE_MIGRATION === "migration") {
     return firestore;
   } else {
     return developmentDB;
@@ -27,13 +32,10 @@ interface BulkWriter {
   close(): Promise<void>;
 }
 const bulkWriter = (firestore: FirebaseFirestore.Firestore) => {
-  console.log(
-    "utils.bulkWriter.EXECUTE_MIGRATION",
-    process.env.EXECUTE_MIGRATION
-  );
-  if (process.env.EXECUTE_MIGRATION === "migration") {
+  console.log("utils.bulkWriter.EXECUTE_MIGRATION", EXECUTE_MIGRATION);
+  if (EXECUTE_MIGRATION === "migration") {
     return firestore.bulkWriter();
-  } else if (process.env.EXECUTE_MIGRATION === "development") {
+  } else if (EXECUTE_MIGRATION === "development") {
     return developmentDB.bulkWriter();
   } else {
     return {
