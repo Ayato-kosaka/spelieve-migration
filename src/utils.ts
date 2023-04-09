@@ -29,6 +29,10 @@ interface BulkWriter {
     data: FirebaseFirestore.UpdateData<T>,
     precondition?: FirebaseFirestore.Precondition
   ): Promise<void>;
+  delete(
+    documentRef: FirebaseFirestore.DocumentReference<any>,
+    precondition?: FirebaseFirestore.Precondition
+  ): Promise<void>;
   close(): Promise<void>;
 }
 const bulkWriter = (firestore: FirebaseFirestore.Firestore) => {
@@ -49,6 +53,13 @@ const bulkWriter = (firestore: FirebaseFirestore.Firestore) => {
         bulkWriterQue.push({
           documentRef,
           data,
+          precondition,
+        });
+      },
+      delete: (documentRef, precondition) => {
+        bulkWriterQue.push({
+          documentRef,
+          data: {},
           precondition,
         });
       },
