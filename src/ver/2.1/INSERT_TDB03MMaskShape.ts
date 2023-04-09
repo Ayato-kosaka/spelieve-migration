@@ -29,6 +29,7 @@ const main = async () => {
         storageUrl: url[0],
         attachedCount: 100,
         createdAt: new Date(),
+        updatedAt: new Date(),
       };
       bulkWriter.create(documentRef, ins);
     })
